@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T.M AI</title>
+    <style>
+        body {
+            background: url("https://i.pinimg.com/originals/7b/b8/a1/7bb8a1c2902ef64ebd058249a369de5e.jpg") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .frame-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .frame {
+            background-color: darkslateblue;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .frame p {
+            margin: 10px 0;
+        }
+
+        .chat-container {
+            position: relative;
+        }
+
+        h1 {
+            color: #ffffff;
+        }
+
+        p strong {
+            color: #ffffff;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+            border: 1px solid #cccccc;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-message {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .user-icon {
+            background-image: url("https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png");
+            background-size: cover;
+        }
+
+        .bot-icon {
+            background-image: url("https://st2.depositphotos.com/16030310/43215/v/450/depositphotos_432153084-stock-illustration-initial-logo-company-name-colored.jpg");
+            background-size: cover;
+        }
+
+        .sender-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-text {
+            display: inline-block;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .logout-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #f44336;
+            padding: 8px 16px;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat with T.M AI</h1>
+    <div class="frame-container">
+        <div class="frame">
+            <div class="chat-container">
+                {% if not chat_history %}
+                    <div class="message bot-message">
+                        <div class="sender-icon bot-icon"></div>
+                        <div class="chat-text">You will pass the exams with me.</div>
+                    </div>
+                {% endif %}
+                {% for message in chat_history %}
+                    <div class="message {% if message.sender == 'user' %}user-message{% else %}bot-message{% endif %}">
+                        <div class="sender-icon {% if message.sender == 'user' %}user-icon{% else %}bot-icon{% endif %}"></div>
+                        <div class="chat-text">{{ message.content }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="{{ url_for('chatbot_route') }}">
+        <input type="text" id="message" name="message" placeholder="Send a message." required>
+        <button type="submit">Send</button>
+    </form>
+
+    <a class="logout-button" href="/logout">Logout</a>
+</body>
+</html>
