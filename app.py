@@ -98,19 +98,6 @@ def logout():
     return redirect('/login')
 
 
-# @app.route('/receive_email', methods=['POST'])
-# def receive_email():
-#     email = request.form['email']
-#     user = User.query.filter_by(email=email).first()
-#     if user:
-#         session['user_id'] = user.id
-#     else:
-#         new_user = User(email=email)
-#         db.session.add(new_user)
-#         db.session.commit()
-#         session['user_id'] = new_user.id
-#     return redirect('/')
-
 
 if __name__ == "__main__":
     db.create_all()
